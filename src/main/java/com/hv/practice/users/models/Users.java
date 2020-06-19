@@ -1,4 +1,4 @@
-package com.hv.practice.models;
+package com.hv.practice.users.models;
 
 import javax.persistence.*;
 
