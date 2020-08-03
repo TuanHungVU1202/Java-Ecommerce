@@ -1,4 +1,4 @@
-package com.hv.practice.common;
+package com.hv.ecommerce.common;
 
 import java.sql.Timestamp;
 import java.time.ZoneId;

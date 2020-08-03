@@ -1,6 +1,4 @@
-package com.hv.practice.products.models;
-
-import com.hv.practice.cart.models.Order;
+package com.hv.ecommerce.products.models;
 
 import javax.persistence.*;
 

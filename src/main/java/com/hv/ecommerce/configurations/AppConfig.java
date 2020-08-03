@@ -1,4 +1,4 @@
-package com.hv.practice.configurations;
+package com.hv.ecommerce.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

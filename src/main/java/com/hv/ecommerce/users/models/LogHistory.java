@@ -1,6 +1,6 @@
-package com.hv.practice.users.models;
+package com.hv.ecommerce.users.models;
 
-import com.hv.practice.common.Utils;
+import com.hv.ecommerce.common.Utils;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

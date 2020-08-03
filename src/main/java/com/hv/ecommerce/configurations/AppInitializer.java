@@ -1,4 +1,4 @@
-package com.hv.practice.configurations;
+package com.hv.ecommerce.configurations;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

@@ -1,6 +1,6 @@
-package com.hv.practice.cart.models;
+package com.hv.ecommerce.cart.models;
 
-import com.hv.practice.products.models.Product;
+import com.hv.ecommerce.products.models.Product;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package com.hv.practice.users.models;
+package com.hv.ecommerce.users.models;
 
-import com.hv.practice.cart.models.Order;
+import com.hv.ecommerce.cart.models.Order;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
