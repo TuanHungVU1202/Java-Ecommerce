@@ -1,4 +1,4 @@
-package com.hv.ecommerce.users.models;
+package com.hv.ecommerce.users;
 
 import com.hv.ecommerce.common.Utils;
 

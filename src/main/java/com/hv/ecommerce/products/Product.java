@@ -1,4 +1,4 @@
-package com.hv.ecommerce.products.models;
+package com.hv.ecommerce.products;
 
 import javax.persistence.*;
 
@@ -13,6 +13,12 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
+
+    @Column(name = "sku", length = 1024)
+    private String sku;
+
+    @Column(name = "priceTag", nullable = true)
+    private Long priceTag;
 
     @Lob
     @Column(name = "productDetails", columnDefinition = "BLOB")
@@ -52,5 +58,21 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public Long getPriceTag() {
+        return priceTag;
+    }
+
+    public void setPriceTag(Long priceTag) {
+        this.priceTag = priceTag;
     }
 }
