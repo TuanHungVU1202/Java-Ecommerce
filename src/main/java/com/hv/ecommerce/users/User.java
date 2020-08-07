@@ -10,18 +10,27 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", length = 1024)
+    @Column(name = "username", length = 1024, unique = true)
     private String username;
 
-    @Column(name = "email", length = 1024)
+    @Column(name = "firstName", length = 1024)
+    private String firstName;
+
+    @Column(name = "lastName", length = 1024)
+    private String lastName;
+
+    @Column(name = "email", length = 1024, unique = true)
     private String email;
+
+    @Column(name = "encryptedPwd", length = 1024)
+    private String encryptedPwd;
 
     @Column(name = "phoneNo", length = 1024)
     private String phoneNo;
@@ -29,10 +38,10 @@ public class Users {
     @Column(name = "gender", length = 1024)
     private String gender;
 
-    @Column(name = "nationalId", length = 1024)
+    @Column(name = "nationalId", length = 1024, unique = true)
     private String nationalId;
 
-    @Column(name = "passportNo", length = 1024)
+    @Column(name = "passportNo", length = 1024, unique = true)
     private String passportNo;
 
     @Column(name = "registerDate", length = 1024)
@@ -149,5 +158,29 @@ public class Users {
 
     public void setLstLogs(List<LogHistory> lstLogs) {
         this.lstLogs = lstLogs;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEncryptedPwd() {
+        return encryptedPwd;
+    }
+
+    public void setEncryptedPwd(String encryptedPwd) {
+        this.encryptedPwd = encryptedPwd;
     }
 }

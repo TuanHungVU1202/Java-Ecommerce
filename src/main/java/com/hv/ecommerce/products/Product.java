@@ -14,7 +14,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
-    @Column(name = "sku", length = 1024)
+    @Column(name = "sku", length = 1024, unique = true)
     private String sku;
 
     @Column(name = "priceTag", nullable = true)
