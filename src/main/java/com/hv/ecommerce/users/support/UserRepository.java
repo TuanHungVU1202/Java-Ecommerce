@@ -30,4 +30,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     List<User> removeByFirstName(String firstName);
 
     List<User> removeByLastName(String lastName);
+
+    boolean existsByEmailOrUsername(String email, String username);
 }

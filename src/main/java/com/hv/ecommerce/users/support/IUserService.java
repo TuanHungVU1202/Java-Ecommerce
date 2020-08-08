@@ -1,10 +1,12 @@
 package com.hv.ecommerce.users.support;
 
+import com.hv.ecommerce.exception.AuthException;
+import com.hv.ecommerce.users.AuthDTO;
 import com.hv.ecommerce.users.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface IUserService {
 
     public List<User> findAll();
 
@@ -33,4 +35,8 @@ public interface UserService {
     public String getHashsedPassword(String plainTextPassword);
 
     public boolean checkPwd(String plainPassword, String usernameOrEmail);
+
+    public User registerNewUser(AuthDTO authDTO) throws AuthException;
+
+    public boolean isEmailOrUsernameExist(String email, String username);
 }
