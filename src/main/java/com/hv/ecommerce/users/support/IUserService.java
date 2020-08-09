@@ -34,9 +34,11 @@ public interface IUserService {
 
     public String getHashsedPassword(String plainTextPassword);
 
-    public boolean checkPwd(String plainPassword, String usernameOrEmail);
+    public boolean validatePassword(String plainPassword, String usernameOrEmail);
 
-    public User registerNewUser(AuthDTO authDTO) throws AuthException;
+    public User registerNewUser(AuthDTO authDTO) throws Exception;
 
-    public boolean isEmailOrUsernameExist(String email, String username);
+    public boolean isEmailExist(String email);
+
+    public boolean isUsernameExist(String username);
 }

@@ -17,7 +17,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", length = 1024, unique = true)
+    @Column(name = "username", length = 1024, unique = true, nullable = false)
     private String username;
 
     @Column(name = "firstName", length = 1024)
@@ -26,7 +26,7 @@ public class User {
     @Column(name = "lastName", length = 1024)
     private String lastName;
 
-    @Column(name = "email", length = 1024, unique = true)
+    @Column(name = "email", length = 1024, unique = true, nullable = false)
     private String email;
 
     @Column(name = "encryptedPwd", length = 1024)

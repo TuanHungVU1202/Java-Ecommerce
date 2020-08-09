@@ -31,5 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     List<User> removeByLastName(String lastName);
 
-    boolean existsByEmailOrUsername(String email, String username);
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

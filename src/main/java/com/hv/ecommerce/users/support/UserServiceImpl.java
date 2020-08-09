@@ -3,6 +3,8 @@ package com.hv.ecommerce.users.support;
 import com.hv.ecommerce.exception.AuthException;
 import com.hv.ecommerce.users.AuthDTO;
 import com.hv.ecommerce.users.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     UserRepository userRepository;
@@ -88,7 +92,7 @@ public class UserServiceImpl implements IUserService {
         return hashPassword(plainTextPassword);
     }
 
-    private boolean checkPass(String plainPassword, String hashedPassword) {
+    private boolean checkPassword(String plainPassword, String hashedPassword) {
         if (BCrypt.checkpw(plainPassword, hashedPassword))
             return true;
         else
@@ -96,12 +100,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean checkPwd(String plainPassword, String usernameOrEmail) {
+    public boolean validatePassword(String plainPassword, String usernameOrEmail) {
 //        Optional<User> user = userRepository.findUserById().get();
 
         //TODO: query hashedPassword from DB to match with plainPassword
         String hashedPassword = "";
-        return checkPass(plainPassword, hashedPassword);
+        return checkPassword(plainPassword, hashedPassword);
     }
 
     @Transactional
@@ -109,23 +113,34 @@ public class UserServiceImpl implements IUserService {
     public User registerNewUser(AuthDTO authDTO)
             throws AuthException {
 
-        if (isEmailOrUsernameExist(authDTO.getEmail(), authDTO.getUsername())) {
+        if (isEmailExist(authDTO.getEmail())) {
             throw new AuthException(
                     "There is an account with that email address: "
                             + authDTO.getEmail());
         }
 
+        if (isUsernameExist(authDTO.getUsername())) {
+            throw new AuthException(
+                    "There is an account with that username: "
+                            + authDTO.getUsername());
+        }
+
         User newUser = new User();
         newUser.setUsername(authDTO.getUsername());
         newUser.setEmail(authDTO.getEmail());
-        newUser.setEncryptedPwd(hashPassword(authDTO.getPlainPassword()));
+        newUser.setEncryptedPwd(getHashsedPassword(authDTO.getPlainPassword()));
 
         userRepository.save(newUser);
         return newUser;
     }
 
     @Override
-    public boolean isEmailOrUsernameExist(String email, String username) {
-        return userRepository.existsByEmailOrUsername(email, username);
+    public boolean isEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isUsernameExist(String username) {
+        return userRepository.existsByUsername(username);
     }
 }
