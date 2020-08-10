@@ -143,4 +143,9 @@ public class UserServiceImpl implements IUserService {
     public boolean isUsernameExist(String username) {
         return userRepository.existsByUsername(username);
     }
+
+    @Override
+    public User logInNormal(AuthDTO authDTO) throws Exception {
+        return null;
+    }
 }

@@ -38,6 +38,8 @@ public interface IUserService {
 
     public User registerNewUser(AuthDTO authDTO) throws Exception;
 
+    public User logInNormal(AuthDTO authDTO) throws Exception;
+
     public boolean isEmailExist(String email);
 
     public boolean isUsernameExist(String username);
