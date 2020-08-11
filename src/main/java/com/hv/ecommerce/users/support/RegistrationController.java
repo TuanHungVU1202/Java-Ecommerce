@@ -12,17 +12,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping(value = "/api")
 public class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
     private IUserService userService;
 
-    @PostMapping(value = "/user/registration", headers = "Accept=application/json")
+    @PostMapping(value = "/register", headers = "Accept=application/json")
     public ResponseEntity<?> register(@Valid @RequestBody AuthDTO authDTO) throws Exception {
         try {
             userService.registerNewUser(authDTO);
