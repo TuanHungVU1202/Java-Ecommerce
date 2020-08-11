@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,17 +19,21 @@ import javax.validation.Valid;
 public class LogInController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    private static final String ACCOUNT_NOT_FOUND = "There is no account associate with that Username/Email and Password";
 
     @Autowired
     private IUserService userService;
 
     @PostMapping(value = "/user/login", headers = "Accept=application/json")
-    public ResponseEntity<?> register(@Valid @RequestBody AuthDTO authDTO) throws Exception {
+    public ResponseEntity<?> logIn(@Valid @RequestBody AuthDTO authDTO) throws Exception {
         try {
-            userService.logInNormal(authDTO);
-            return new ResponseEntity<User>(HttpStatus.OK);
+            User user = userService.logInNormal(authDTO);
+            if (null != user) {
+                return new ResponseEntity<User>(user, HttpStatus.FOUND);
+            }
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         } catch (AuthException authE) {
-            throw new AuthException(HttpStatus.FORBIDDEN, authE.getMessage());
+            throw new AuthException(HttpStatus.GONE, authE.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.GONE)

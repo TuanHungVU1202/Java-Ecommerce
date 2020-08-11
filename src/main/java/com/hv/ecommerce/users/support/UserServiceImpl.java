@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +93,7 @@ public class UserServiceImpl implements IUserService {
         return hashPassword(plainTextPassword);
     }
 
+    /*
     private boolean checkPassword(String plainPassword, String hashedPassword) {
         if (BCrypt.checkpw(plainPassword, hashedPassword))
             return true;
@@ -103,15 +105,25 @@ public class UserServiceImpl implements IUserService {
     public boolean validatePassword(String plainPassword, String usernameOrEmail) {
 //        Optional<User> user = userRepository.findUserById().get();
 
-        //TODO: query hashedPassword from DB to match with plainPassword
         String hashedPassword = "";
         return checkPassword(plainPassword, hashedPassword);
+    }
+    */
+
+    @Override
+    public boolean isEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isUsernameExist(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Transactional
     @Override
     public User registerNewUser(AuthDTO authDTO)
-            throws AuthException {
+            throws Exception {
 
         if (isEmailExist(authDTO.getEmail())) {
             throw new AuthException(
@@ -135,17 +147,25 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean isEmailExist(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean isUsernameExist(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    @Override
     public User logInNormal(AuthDTO authDTO) throws Exception {
-        return null;
+        try {
+            Optional<User> foundUser;
+            String usernameOrEmail = authDTO.getUsername();
+
+            foundUser = userRepository.findUserFromLogInNormal(usernameOrEmail, usernameOrEmail);
+            if (foundUser.isPresent()) {
+                String encryptedPwd = foundUser.get().getEncryptedPwd();
+                if (BCrypt.checkpw(authDTO.getPlainPassword(), encryptedPwd)) {
+                    return foundUser.get();
+                } else {
+                    throw new AuthException("The entered Password is incorrect");
+                }
+            } else {
+                throw new AuthException("No account associate with entered Username/Email");
+            }
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new Exception(e);
+        }
     }
 }

@@ -34,7 +34,7 @@ public interface IUserService {
 
     public String getHashsedPassword(String plainTextPassword);
 
-    public boolean validatePassword(String plainPassword, String usernameOrEmail);
+//    public boolean validatePassword(String plainPassword, String usernameOrEmail);
 
     public User registerNewUser(AuthDTO authDTO) throws Exception;
 
