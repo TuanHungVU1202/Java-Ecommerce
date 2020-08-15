@@ -33,12 +33,13 @@ public class LogInController {
         try {
             User user = userService.logInNormal(authDTO);
             if (null != user) {
-                return new ResponseEntity<User>(user, HttpStatus.FOUND);
+                return new ResponseEntity<User>(user, HttpStatus.OK);
             }
-//            returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, )
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, "Wrong Credentials");
+            return new ResponseEntity<String>(returnStr, HttpStatus.UNAUTHORIZED);
         } catch (AuthException authE) {
-            throw new AuthException(HttpStatus.GONE, authE.getMessage());
+            returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, authE.getMessage());
+            return new ResponseEntity<String>(returnStr, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.GONE)

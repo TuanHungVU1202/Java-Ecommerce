@@ -123,7 +123,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     @Override
     public User registerNewUser(AuthDTO authDTO)
-            throws Exception {
+            throws AuthException {
 
         if (isEmailExist(authDTO.getEmail())) {
             throw new AuthException(
@@ -147,25 +147,20 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User logInNormal(AuthDTO authDTO) throws Exception {
-        try {
-            Optional<User> foundUser;
-            String usernameOrEmail = authDTO.getUsername();
+    public User logInNormal(AuthDTO authDTO) throws AuthException {
+        Optional<User> foundUser;
+        String usernameOrEmail = authDTO.getUsername();
 
-            foundUser = userRepository.findUserFromLogInNormal(usernameOrEmail, usernameOrEmail);
-            if (foundUser.isPresent()) {
-                String encryptedPwd = foundUser.get().getEncryptedPwd();
-                if (BCrypt.checkpw(authDTO.getPlainPassword(), encryptedPwd)) {
-                    return foundUser.get();
-                } else {
-                    throw new AuthException("The entered Password is incorrect");
+        foundUser = userRepository.findUserFromLogInNormal(usernameOrEmail, usernameOrEmail);
+        if (foundUser.isPresent()) {
+            String encryptedPwd = foundUser.get().getEncryptedPwd();
+            if (BCrypt.checkpw(authDTO.getPlainPassword(), encryptedPwd)) {
+                return foundUser.get();
+            } else {
+                throw new AuthException("The entered Password is incorrect");
                 }
             } else {
                 throw new AuthException("No account associate with entered Username/Email");
             }
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new Exception(e);
-        }
     }
 }
