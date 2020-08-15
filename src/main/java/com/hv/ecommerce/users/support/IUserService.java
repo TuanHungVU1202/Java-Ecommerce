@@ -8,19 +8,19 @@ import java.util.List;
 
 public interface IUserService {
 
-    public List<User> findAll();
+    List<User> findAll();
 
-    public User findUserById(long id);
+    User findUserById(long id);
 
-    public User findUserByUsername(String username);
+    User findUserByUsername(String username);
 
-    public User findUserByFirstName(String firstName);
+    User findUserByFirstName(String firstName);
 
-    public User findUserByLastName(String lastName);
+    User findUserByLastName(String lastName);
 
-    public User updateUserByLastName(String lastName);
+    User updateUserByLastName(String lastName);
 
-    public void saveUser(User user);
+    void saveUser(User user);
 
     long deleteById(Long id);
 
@@ -32,15 +32,15 @@ public interface IUserService {
 
     List<User> removeByLastName(String lastName);
 
-    public String getHashsedPassword(String plainTextPassword);
+    String getHashsedPassword(String plainTextPassword);
 
-//    public boolean validatePassword(String plainPassword, String usernameOrEmail);
+//  boolean validatePassword(String plainPassword, String usernameOrEmail);
 
-    public User registerNewUser(AuthDTO authDTO) throws Exception;
+    User registerNewUser(AuthDTO authDTO) throws Exception;
 
-    public User logInNormal(AuthDTO authDTO) throws Exception;
+    User logInNormal(AuthDTO authDTO) throws Exception;
 
-    public boolean isEmailExist(String email);
+    boolean isEmailExist(String email);
 
-    public boolean isUsernameExist(String username);
+    boolean isUsernameExist(String username);
 }

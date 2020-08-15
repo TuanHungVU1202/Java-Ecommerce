@@ -1,10 +1,14 @@
 package com.hv.ecommerce.exception;
 
+import com.hv.ecommerce.common.DynamicObj;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 
 public class AuthException extends RuntimeException {
 
-    private HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    private HttpStatus httpStatus;
+    private Model model;
+    private DynamicObj dynamicObj;
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
@@ -20,6 +24,16 @@ public class AuthException extends RuntimeException {
      */
     public AuthException(HttpStatus httpStatus, String message) {
         super(message);
+        this.httpStatus = httpStatus;
+    }
+
+    public AuthException(HttpStatus httpStatus, Model model) {
+        this.model = model;
+        this.httpStatus = httpStatus;
+    }
+
+    public AuthException(HttpStatus httpStatus, DynamicObj obj) {
+        this.dynamicObj = obj;
         this.httpStatus = httpStatus;
     }
 

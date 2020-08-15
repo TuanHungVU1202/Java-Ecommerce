@@ -1,5 +1,7 @@
 package com.hv.ecommerce.users.support;
 
+import com.hv.ecommerce.common.Constant;
+import com.hv.ecommerce.common.Utils;
 import com.hv.ecommerce.exception.AuthException;
 import com.hv.ecommerce.users.AuthDTO;
 import com.hv.ecommerce.users.User;
@@ -27,11 +29,13 @@ public class LogInController {
 
     @PostMapping(value = "/login", headers = "Accept=application/json")
     public ResponseEntity<?> logIn(@Valid @RequestBody AuthDTO authDTO) throws Exception {
+        String returnStr;
         try {
             User user = userService.logInNormal(authDTO);
             if (null != user) {
                 return new ResponseEntity<User>(user, HttpStatus.FOUND);
             }
+//            returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, )
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         } catch (AuthException authE) {
             throw new AuthException(HttpStatus.GONE, authE.getMessage());
