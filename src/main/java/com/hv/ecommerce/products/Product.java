@@ -3,37 +3,45 @@ package com.hv.ecommerce.products;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "productId", nullable = false)
+    private Long productId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private ProductDetails productDetails;
+
+    // This is for Order model
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    @Column(name = "sku", length = 1024, unique = true)
-    private String sku;
-
-    @Column(name = "priceTag", nullable = true)
+    @Column(name = "priceTag")
     private Long priceTag;
 
-    @Lob
-    @Column(name = "productDetails", columnDefinition = "BLOB")
-    private byte[] productDetails;
+    @Column(name = "availability", length = 1024)
+    private String availability;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        return id != null && id.equals(((Product) o).getId());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Product)) return false;
+        return productId != null && productId.equals(((Product) obj).getProductId());
     }
 
     @Override
     public int hashCode() {
         return 12;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Product getProduct() {
@@ -44,35 +52,27 @@ public class Product {
         this.product = product;
     }
 
-    public byte[] getProductDetails() {
-        return productDetails;
-    }
-
-    public void setProductDetails(byte[] productDetails) {
-        this.productDetails = productDetails;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
     public Long getPriceTag() {
         return priceTag;
     }
 
     public void setPriceTag(Long priceTag) {
         this.priceTag = priceTag;
+    }
+
+    public ProductDetails getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
+    }
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
     }
 }

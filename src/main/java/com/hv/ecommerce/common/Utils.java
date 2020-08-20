@@ -29,7 +29,7 @@ public class Utils {
         return mapToJsonString(map);
     }
 
-    public static String mapToJsonString(HashMap map) throws JsonProcessingException {
+    public static <K, V> String mapToJsonString(HashMap<K, V> map) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String ret = mapper.writeValueAsString(map);
         return ret;

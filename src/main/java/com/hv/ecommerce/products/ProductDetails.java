@@ -1,12 +1,34 @@
 package com.hv.ecommerce.products;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "productDetails")
 public class ProductDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId", nullable = false)
+    private Long productId;
+
+    @Column(name = "sku", length = 1024, unique = true, nullable = false)
+    private String sku;
+
+    @OneToOne
+    @MapsId
+    private Product product;
+
+    @Column(name = "productName", length = 1024)
     private String productName;
-    private String category;
+
+    @Column(name = "description", length = 1024)
+    private String description;
+
+    @Column(name = "dimension", length = 1024)
     private String dimension;
-    private String material;
-    private String photo;
+
+    @Column(name = "photoPath", length = 1024)
+    private String photoPath;
 
     public String getProductName() {
         return productName;
@@ -14,14 +36,6 @@ public class ProductDetails {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getDimension() {
@@ -32,19 +46,43 @@ public class ProductDetails {
         this.dimension = dimension;
     }
 
-    public String getMaterial() {
-        return material;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getSku() {
+        return sku;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 }
