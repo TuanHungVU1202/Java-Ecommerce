@@ -3,7 +3,7 @@ package com.hv.ecommerce.products;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
 
     @Id

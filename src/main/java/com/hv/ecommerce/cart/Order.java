@@ -11,9 +11,9 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "orderId", nullable = false)
+    private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
@@ -27,9 +27,6 @@ public class Order {
             orphanRemoval = true
     )
     private List<Product> products = new ArrayList<>();
-
-//    @Column(name="productId", length = 1024)
-//    private String productId;
 
     @Column(name = "total", nullable = false)
     private Long total;
@@ -45,7 +42,7 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
-        return id != null && id.equals(((Order) o).getId());
+        return orderId != null && orderId.equals(((Order) o).getOrderId());
     }
 
     @Override
@@ -61,12 +58,12 @@ public class Order {
         return order;
     }
 
-    public Long getId() {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getCustomerId() {
