@@ -1,6 +1,8 @@
 package com.hv.ecommerce.products;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -8,15 +10,28 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productId", nullable = false)
-    private Long productId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
+    // Map directly with Id of Product Details entity
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private ProductDetails productDetails;
 
-    // This is for Order model
+    // Map Order model
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
+
+    // Map with Category
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "category_product_set",
+            joinColumns = @JoinColumn(name = "products_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    @OrderBy("category_name ASC")
+    private Set<Category> categories = new LinkedHashSet<>();
 
     @Column(name = "priceTag")
     private Long priceTag;
@@ -28,7 +43,7 @@ public class Product {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Product)) return false;
-        return productId != null && productId.equals(((Product) obj).getProductId());
+        return id != null && id.equals(((Product) obj).getId());
     }
 
     @Override
@@ -36,12 +51,12 @@ public class Product {
         return 12;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Product getProduct() {
@@ -74,5 +89,15 @@ public class Product {
 
     public void setAvailability(String availability) {
         this.availability = availability;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
+        category.getProducts().add(this);
+    }
+
+    public void removeCategory(Category category) {
+        categories.remove(category);
+        category.getProducts().remove(this);
     }
 }

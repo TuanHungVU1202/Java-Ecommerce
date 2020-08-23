@@ -55,6 +55,7 @@ public class User {
     @Column(name = "address", length = 1024)
     private String address;
 
+    // Map with Order
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,

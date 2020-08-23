@@ -8,15 +8,16 @@ public class ProductDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productId", nullable = false)
-    private Long productId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "sku", length = 1024, unique = true, nullable = false)
-    private String sku;
-
+    // Map directly with Id of Product Entity
     @OneToOne
     @MapsId
     private Product product;
+
+    @Column(name = "sku", length = 1024, unique = true, nullable = false)
+    private String sku;
 
     @Column(name = "productName", length = 1024)
     private String productName;
@@ -46,12 +47,12 @@ public class ProductDetails {
         this.dimension = dimension;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSku() {

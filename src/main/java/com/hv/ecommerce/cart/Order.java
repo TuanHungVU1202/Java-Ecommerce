@@ -12,9 +12,10 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "orderId", nullable = false)
-    private Long orderId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
+    // Map with User
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
@@ -42,7 +43,7 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
-        return orderId != null && orderId.equals(((Order) o).getOrderId());
+        return id != null && id.equals(((Order) o).getId());
     }
 
     @Override
@@ -58,12 +59,12 @@ public class Order {
         return order;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Long getId() {
+        return id;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getCustomerId() {
@@ -73,7 +74,6 @@ public class Order {
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
-
 
     public Long getTotal() {
         return total;
