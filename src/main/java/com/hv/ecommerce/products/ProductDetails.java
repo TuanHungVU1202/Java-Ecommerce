@@ -22,8 +22,9 @@ public class ProductDetails {
     @Column(name = "productName", length = 1024)
     private String productName;
 
-    @Column(name = "description", length = 1024)
-    private String description;
+    @Lob
+    @Column(name = "description", columnDefinition = "BLOB")
+    private byte[] description;
 
     @Column(name = "dimension", length = 1024)
     private String dimension;
@@ -71,19 +72,19 @@ public class ProductDetails {
         this.product = product;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getPhotoPath() {
         return photoPath;
     }
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public byte[] getDescription() {
+        return description;
+    }
+
+    public void setDescription(byte[] description) {
+        this.description = description;
     }
 }

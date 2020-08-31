@@ -19,9 +19,6 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
-    @Column(name = "customerId", length = 1024)
-    private Long customerId;
-
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
@@ -32,7 +29,7 @@ public class Order {
     @Column(name = "total", nullable = false)
     private Long total;
 
-    @Column(name = "status", length = 1024)
+    @Column(name = "status", length = 50)
     private String status;
 
     @Lob
@@ -65,14 +62,6 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
     }
 
     public Long getTotal() {

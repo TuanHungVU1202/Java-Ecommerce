@@ -1,10 +1,10 @@
 package com.hv.ecommerce.users.support;
 
-import com.hv.ecommerce.exception.AuthException;
 import com.hv.ecommerce.users.AuthDTO;
 import com.hv.ecommerce.users.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
 
@@ -14,23 +14,15 @@ public interface IUserService {
 
     User findUserByUsername(String username);
 
-    User findUserByFirstName(String firstName);
+    List<User> findUserByFirstName(String firstName);
 
-    User findUserByLastName(String lastName);
+    List<User> findUserByLastName(String lastName);
 
-    User updateUserByLastName(String lastName);
+    long removeById(Long id);
 
-    void saveUser(User user);
+    long removeByUsername(String username);
 
-    long deleteById(Long id);
-
-    User removeByUsername(String username);
-
-    User removeByEmail(String email);
-
-    List<User> removeByFirstName(String firstName);
-
-    List<User> removeByLastName(String lastName);
+    long removeByEmail(String email);
 
     String getHashsedPassword(String plainTextPassword);
 

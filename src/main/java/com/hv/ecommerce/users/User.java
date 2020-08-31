@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,32 +21,32 @@ public class User {
     @Column(name = "username", length = 1024, unique = true, nullable = false)
     private String username;
 
-    @Column(name = "firstName", length = 1024)
+    @Column(name = "firstName", length = 100)
     private String firstName;
 
-    @Column(name = "lastName", length = 1024)
+    @Column(name = "lastName", length = 100)
     private String lastName;
 
-    @Column(name = "email", length = 1024, unique = true, nullable = false)
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
     @Column(name = "encryptedPwd", length = 1024)
     private String encryptedPwd;
 
-    @Column(name = "phoneNo", length = 1024)
+    @Column(name = "phoneNo", length = 50)
     private String phoneNo;
 
-    @Column(name = "gender", length = 1024)
+    @Column(name = "gender", length = 10)
     private String gender;
 
-    @Column(name = "nationalId", length = 1024, unique = true)
+    @Column(name = "nationalId", length = 50, unique = true)
     private String nationalId;
 
-    @Column(name = "passportNo", length = 1024, unique = true)
+    @Column(name = "passportNo", length = 50, unique = true)
     private String passportNo;
 
-    @Column(name = "registerDate", length = 1024)
-    private String registerDate;
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp registerDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -119,11 +120,11 @@ public class User {
         this.passportNo = passportNo;
     }
 
-    public String getRegisterDate() {
+    public Timestamp getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(String registerDate) {
+    public void setRegisterDate(Timestamp registerDate) {
         this.registerDate = registerDate;
     }
 

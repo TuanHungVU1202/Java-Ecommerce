@@ -2,7 +2,6 @@ package com.hv.ecommerce.products;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +17,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new LinkedHashSet<>();
 
-    @Column(name = "categoryName", length = 1024)
+    @Column(name = "categoryName", length = 50)
     private String categoryName;
 
     @Column(name = "parentId", nullable = true)

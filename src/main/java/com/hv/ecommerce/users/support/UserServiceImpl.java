@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,52 +34,39 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findUserByUsername(String username) {
-        return null;
+
+        return userRepository.findUserByUsername(username);
     }
 
     @Override
-    public User findUserByFirstName(String firstName) {
-        return null;
+    public List<User> findUserByFirstName(String firstName) {
+        return userRepository.findUserByFirstName(firstName);
     }
 
     @Override
-    public User findUserByLastName(String lastName) {
-        return null;
+    public List<User> findUserByLastName(String lastName) {
+
+        return userRepository.findUserByLastName(lastName);
     }
 
+    @Transactional
     @Override
-    public User updateUserByLastName(String lastName) {
-        return null;
+    public long removeById(Long id) {
+        return userRepository.removeById(id);
     }
 
+    @Transactional
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public long removeByUsername(String username) {
+
+        return userRepository.removeByUsername(username);
     }
 
+    @Transactional
     @Override
-    public long deleteById(Long id) {
-        return 0;
-    }
+    public long removeByEmail(String email) {
 
-    @Override
-    public User removeByUsername(String username) {
-        return null;
-    }
-
-    @Override
-    public User removeByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public List<User> removeByFirstName(String firstName) {
-        return null;
-    }
-
-    @Override
-    public List<User> removeByLastName(String lastName) {
-        return null;
+        return userRepository.removeByEmail(email);
     }
 
     private String hashPassword(String plainTextPassword) {

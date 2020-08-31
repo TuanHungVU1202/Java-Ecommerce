@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+// work like DAO
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
@@ -19,19 +20,15 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     List<User> findUserByLastName(String lastName);
 
-    List<User> findUserByUsername(String username);
+    User findUserByUsername(String username);
 
     List<User> findAll();
 
-    void deleteById(Long id);
+    long removeById(Long id);
 
-    User removeByUsername(String username);
+    long removeByUsername(String username);
 
-    User removeByEmail(String email);
-
-    List<User> removeByFirstName(String firstName);
-
-    List<User> removeByLastName(String lastName);
+    long removeByEmail(String email);
 
     boolean existsByEmail(String email);
 

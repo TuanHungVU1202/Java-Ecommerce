@@ -3,6 +3,7 @@ package com.hv.ecommerce.common;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.*;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -33,5 +34,41 @@ public class Utils {
         ObjectMapper mapper = new ObjectMapper();
         String ret = mapper.writeValueAsString(map);
         return ret;
+    }
+
+    public static byte[] objectToByte(Object object) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(object);
+            out.flush();
+            byte[] yourBytes = bos.toByteArray();
+            return yourBytes;
+        } finally {
+            try {
+                bos.close();
+            } catch (IOException ex) {
+                // ignore
+            }
+        }
+    }
+
+    public static Object byteToObject(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+        ObjectInput in = null;
+        try {
+            in = new ObjectInputStream(bis);
+            Object obj = in.readObject();
+            return obj;
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
     }
 }
