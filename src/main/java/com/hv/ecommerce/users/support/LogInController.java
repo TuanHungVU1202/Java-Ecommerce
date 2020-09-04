@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "/api")
 public class LogInController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
@@ -33,13 +32,13 @@ public class LogInController {
         try {
             User user = userService.logInNormal(authDTO);
             if (null != user) {
-                return new ResponseEntity<User>(user, HttpStatus.OK);
+                return new ResponseEntity<>(user, HttpStatus.OK);
             }
             returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, "Wrong Credentials");
-            return new ResponseEntity<String>(returnStr, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(returnStr, HttpStatus.UNAUTHORIZED);
         } catch (AuthException authE) {
             returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, authE.getMessage());
-            return new ResponseEntity<String>(returnStr, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(returnStr, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.GONE)
