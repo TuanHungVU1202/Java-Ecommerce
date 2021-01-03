@@ -27,5 +27,8 @@ target/
 /.nb-gradle/
 build/
 
+### Dev props ###
+/src/main/resources/application-dev.properties
+
 ### VS Code ###
 .vscode/
