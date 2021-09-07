@@ -1,6 +1,7 @@
 package com.hv.ecommerce.products.support;
 
 import com.hv.ecommerce.products.Product;
+import com.hv.ecommerce.products.ProductDTO;
 import com.hv.ecommerce.users.AuthDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProduct() {
+    public ResponseEntity<List<Long>> addProduct(List<ProductDTO> lstProductDTO) {
+        // TODO: finish this method
+
         return null;
     }
 }
