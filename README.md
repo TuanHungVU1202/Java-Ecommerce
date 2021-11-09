@@ -10,7 +10,7 @@ Pet Project - Ecommerce backend written in Java
 - Divide by page/function
 
 ## **Implemented features** - Update when change
-- Register new user, save to DB
+- Register new user, save to DB with encrypted password
 - JWT authen
 - Log in
 - Models for Products, Cart and Profile
