@@ -1,7 +1,7 @@
 # Java-Ecommerce
 Pet Project - Ecommerce backend written in Java
 
-##**Technologies and structure used** - Update when change
+## **Technologies and structure used** - Update when change
 - SpringBoot
 - Spring Framework
 - MVC pattern
@@ -9,7 +9,7 @@ Pet Project - Ecommerce backend written in Java
 - Hibernate
 - Divide by page/function
 
-##**Features implemented** - Update when change
+## **Features implemented** - Update when change
 - Register new user, save to DB
 - JWT authen
 - Log in
