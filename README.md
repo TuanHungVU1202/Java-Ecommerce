@@ -9,10 +9,11 @@ Pet Project - Ecommerce backend written in Java
 - Hibernate
 - Divide by page/function
 
-## **Features implemented** - Update when change
+## **Implemented features** - Update when change
 - Register new user, save to DB
 - JWT authen
 - Log in
 - Models for Products, Cart and Profile
+- Exception handling
 
 The implementation has references will come with the reference link directly with comment in the code. Still many more features and their implementation details to think about.
