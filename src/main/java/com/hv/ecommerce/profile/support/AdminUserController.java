@@ -1,4 +1,4 @@
-package com.hv.ecommerce.users.support;
+package com.hv.ecommerce.profile.support;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,72 +1,35 @@
-package com.hv.ecommerce.users.support;
+package com.hv.ecommerce.authen.support;
 
+import com.hv.ecommerce.authen.AuthDTO;
 import com.hv.ecommerce.exception.AuthException;
-import com.hv.ecommerce.users.AuthDTO;
-import com.hv.ecommerce.users.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hv.ecommerce.profile.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
-public class UserServiceImpl implements IUserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+public class AuthServiceImpl implements UserDetailsService, IAuthService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User findUserById(long id) {
-        Optional<User> user = userRepository.findUserById(id);
-        return user.isPresent() ? user.get() : null;
-    }
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public User findUserByUsername(String username) {
 
         return userRepository.findUserByUsername(username);
-    }
-
-    @Override
-    public List<User> findUserByFirstName(String firstName) {
-        return userRepository.findUserByFirstName(firstName);
-    }
-
-    @Override
-    public List<User> findUserByLastName(String lastName) {
-
-        return userRepository.findUserByLastName(lastName);
-    }
-
-    @Transactional
-    @Override
-    public long removeById(Long id) {
-        return userRepository.removeById(id);
-    }
-
-    @Transactional
-    @Override
-    public long removeByUsername(String username) {
-
-        return userRepository.removeByUsername(username);
-    }
-
-    @Transactional
-    @Override
-    public long removeByEmail(String email) {
-
-        return userRepository.removeByEmail(email);
     }
 
     private String hashPassword(String plainTextPassword) {
@@ -78,23 +41,6 @@ public class UserServiceImpl implements IUserService {
 
         return hashPassword(plainTextPassword);
     }
-
-    /*
-    private boolean checkPassword(String plainPassword, String hashedPassword) {
-        if (BCrypt.checkpw(plainPassword, hashedPassword))
-            return true;
-        else
-            return false;
-    }
-
-    @Override
-    public boolean validatePassword(String plainPassword, String usernameOrEmail) {
-//        Optional<User> user = userRepository.findUserById().get();
-
-        String hashedPassword = "";
-        return checkPassword(plainPassword, hashedPassword);
-    }
-    */
 
     @Override
     public boolean isEmailExist(String email) {
@@ -128,11 +74,12 @@ public class UserServiceImpl implements IUserService {
         newUser.setEmail(authDTO.getEmail());
         newUser.setEncryptedPwd(getHashsedPassword(authDTO.getPlainPassword()));
 
+        // saving new user
         userRepository.save(newUser);
         return newUser;
     }
 
-    @Override
+/*    @Override
     public User logInNormal(AuthDTO authDTO) throws AuthException {
         Optional<User> foundUser;
         String usernameOrEmail = authDTO.getUsername();
@@ -144,9 +91,29 @@ public class UserServiceImpl implements IUserService {
                 return foundUser.get();
             } else {
                 throw new AuthException("The entered Password is incorrect");
-                }
-            } else {
-                throw new AuthException("No account associate with entered Username/Email");
             }
+        } else {
+            throw new AuthException("No account associate with entered Username/Email");
+        }
+    }*/
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+        if (null == user) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getEncryptedPwd(),
+                new ArrayList<>());
+    }
+
+    public void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.hv.ecommerce.users;
+package com.hv.ecommerce.profile;
 
 import com.hv.ecommerce.common.Utils;
 

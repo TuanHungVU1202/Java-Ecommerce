@@ -1,4 +1,4 @@
-package com.hv.ecommerce.users;
+package com.hv.ecommerce.authen;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

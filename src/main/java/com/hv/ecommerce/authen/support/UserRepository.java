@@ -1,6 +1,6 @@
-package com.hv.ecommerce.users.support;
+package com.hv.ecommerce.authen.support;
 
-import com.hv.ecommerce.users.User;
+import com.hv.ecommerce.profile.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
