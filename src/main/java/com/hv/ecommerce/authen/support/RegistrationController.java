@@ -34,7 +34,7 @@ public class RegistrationController {
             returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, authE.getMessage());
             return new ResponseEntity<>(returnStr, HttpStatus.GONE);
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            logger.error("Register error: ", e);
             return ResponseEntity.status(HttpStatus.GONE)
                     .body(e.getMessage());
         }

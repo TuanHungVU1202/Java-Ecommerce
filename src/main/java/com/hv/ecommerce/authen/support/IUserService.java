@@ -1,12 +1,17 @@
 package com.hv.ecommerce.authen.support;
 
 import com.hv.ecommerce.profile.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
 public interface IUserService {
 
-    List<User> findAll();
+    Page<User> findAll(Pageable paging);
+
+    Page<User> findAll(Specification<User> spec, Pageable paging);
 
     User findUserById(long id);
 

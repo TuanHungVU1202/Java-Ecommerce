@@ -1,13 +1,11 @@
 package com.hv.ecommerce.authen.support;
 
-import com.hv.ecommerce.authen.AuthDTO;
 import com.hv.ecommerce.authen.JwtRequest;
 import com.hv.ecommerce.authen.JwtResponse;
 import com.hv.ecommerce.common.Constant;
 import com.hv.ecommerce.common.Utils;
 import com.hv.ecommerce.configurations.JwtTokenConfig;
 import com.hv.ecommerce.exception.AuthException;
-import com.hv.ecommerce.profile.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.validation.Valid;
 
 @Controller
 public class LogInController {
@@ -67,7 +63,7 @@ public class LogInController {
             returnStr = Utils.customMessageObj(Constant.RETURN_MESSAGE_KEY, authE.getMessage());
             return new ResponseEntity<>(returnStr, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            logger.error("Login error: ", e);
             return ResponseEntity.status(HttpStatus.GONE)
                     .body(e.getMessage());
         }

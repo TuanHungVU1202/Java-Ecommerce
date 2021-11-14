@@ -1,12 +1,15 @@
 package com.hv.ecommerce.profile;
 
 import com.hv.ecommerce.cart.Order;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -45,8 +48,18 @@ public class User {
     @Column(name = "passportNo", length = 50, unique = true)
     private String passportNo;
 
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp registerDate;
+//    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+//    private Timestamp registerDate;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createDate")
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modifyDate")
+    private Date modifyDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -120,12 +133,12 @@ public class User {
         this.passportNo = passportNo;
     }
 
-    public Timestamp getRegisterDate() {
-        return registerDate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setRegisterDate(Timestamp registerDate) {
-        this.registerDate = registerDate;
+    public Date getModifyDate() {
+        return modifyDate;
     }
 
     public String getAddress() {

@@ -1,6 +1,9 @@
 package com.hv.ecommerce.authen.support;
 
 import com.hv.ecommerce.profile.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +25,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     User findUserByUsername(String username);
 
-    List<User> findAll();
+    Page<User> findAll(Pageable paging);
+
+    Page<User> findAll(Specification<User> spec, Pageable paging);
 
     long removeById(Long id);
 
