@@ -35,7 +35,7 @@ public class AdminUserController {
     @GetMapping("/users")
     public ResponseEntity<?> searchUsers(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "5") int size,
-                                      @RequestParam (required = false) String search) throws Exception {
+                                      @RequestParam (required = false) String search) {
         try {
             // Default sort Descending by Crate time
             //  Sort multiple conditions PageRequest.of(0, 5, Sort.by("price").descending().and(Sort.by("name")));
@@ -45,7 +45,6 @@ public class AdminUserController {
                 Page<User> userPage = userService.findAll(paging);
                 userList = userPage.getContent();
             } else {
-                // TODO: add sepcs for firstName, lastName, phoneNo and address
                 SearchSpecification usernameSpec = new SearchSpecification(new SearchCriteria("username", ":", search));
                 SearchSpecification emailSpec = new SearchSpecification(new SearchCriteria("email", ":", search));
                 SearchSpecification firstNameSpec = new SearchSpecification(new SearchCriteria("firstName", ":", search));
